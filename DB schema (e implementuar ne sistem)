@@ -1,0 +1,104 @@
+
+CREATE TABLE perdoruesi (
+    user_id INT PRIMARY KEY AUTO_INCREMENT,
+    emri VARCHAR(100),
+    mbiemri VARCHAR(100),
+    email VARCHAR(150),
+    fjalkalimi VARCHAR(255),
+    numri_tel VARCHAR(30),
+    data_regjistrimit TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    roli VARCHAR(50)
+);
+
+
+CREATE TABLE user_logs (
+    log_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    pershkrim TEXT,
+    ip_adresa VARCHAR(50),
+    device VARCHAR(100),
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES perdoruesi(user_id)
+);
+
+
+CREATE TABLE kompania (
+    kompania_id INT PRIMARY KEY AUTO_INCREMENT,
+    emri_kompanise VARCHAR(150),
+    email VARCHAR(150),
+    fjalkalimi VARCHAR(255),
+    adresa VARCHAR(255),
+    data_regjistrimit TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE kompania_logs (
+    log_id INT PRIMARY KEY AUTO_INCREMENT,
+    kompania_id INT,
+    pershkrim TEXT,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (kompania_id) REFERENCES kompania(kompania_id)
+);
+
+
+CREATE TABLE autobusi (
+    autobusi_id INT PRIMARY KEY AUTO_INCREMENT,
+    kompania_id INT,
+    marka VARCHAR(100),
+    modeli VARCHAR(100),
+    kapaciteti INT,
+    viti_prodhimit INT,
+    status VARCHAR(50),
+    pergjegjes VARCHAR(100),
+    FOREIGN KEY (kompania_id) REFERENCES kompania(kompania_id)
+);
+
+
+CREATE TABLE itinerari (
+    itinerari_id INT PRIMARY KEY AUTO_INCREMENT,
+    autobusi_id INT,
+    qyteti_nisjes VARCHAR(100),
+    qyteti_destinacion VARCHAR(100),
+    data_nisjes DATE,
+    ora_nisjes TIME,
+    numri_vendeve INT,
+    status VARCHAR(50),
+    FOREIGN KEY (autobusi_id) REFERENCES autobusi(autobusi_id)
+);
+
+
+CREATE TABLE bileta (
+    bileta_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    itinerari_id INT,
+    data_rezervimit TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    vendi_nr INT,
+    FOREIGN KEY (user_id) REFERENCES perdoruesi(user_id),
+    FOREIGN KEY (itinerari_id) REFERENCES itinerari(itinerari_id)
+);
+
+
+CREATE TABLE transaksion (
+    transaksion_id INT PRIMARY KEY AUTO_INCREMENT,
+    bileta_id INT,
+    counterparty_id INT,
+    counterparty_type VARCHAR(50),
+    lloji_transaksionit VARCHAR(50),
+    shuma DECIMAL(10,2),
+    monedha VARCHAR(10),
+    data_transaksionit TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    metoda VARCHAR(50),
+    token_transaksioni VARCHAR(255),
+    status VARCHAR(50),
+    pershkrim TEXT,
+    FOREIGN KEY (bileta_id) REFERENCES bileta(bileta_id)
+);
+
+
+CREATE TABLE rating (
+    transaksion_id INT,
+    vleresim INT,
+    komente VARCHAR(255),
+    PRIMARY KEY (transaksion_id),
+    FOREIGN KEY (transaksion_id) REFERENCES transaksion(transaksion_id)
+);
