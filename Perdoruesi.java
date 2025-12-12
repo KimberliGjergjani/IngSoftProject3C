@@ -19,7 +19,17 @@ public class Perdoruesi {
         this.mbiemri = mbiemri;
         this.emri = emri;
         this.userId = userId;
-    }
+    } // konstruktor me userId per select / login
+
+    public Perdoruesi(String emri, String mbiemri, String email, String password, String numriTel, int status , Date dataReg) {
+        this.emri = emri;
+        this.mbiemri = mbiemri;
+        this.email = email;
+        this.password = password;
+        this.numriTel = numriTel;
+        this.status = status;
+        this.dataReg = dataReg;
+    } // konstruktor pa userId per regjistrim
 
     public int getUserId() {
         return userId;

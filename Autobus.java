@@ -8,7 +8,14 @@ public class Autobus {
     private String status;
     private String pergjegjes;
 
-    public Autobus(int autobusiId, int kompaniaId, String targa, String modeli, int kapaciteti, int viti_prodhimit, String status, String pergjegjes) {
+    public Autobus(int autobusiId,
+                   int kompaniaId,
+                   String targa,
+                   String modeli,
+                   int kapaciteti,
+                   int viti_prodhimit,
+                   String status,
+                   String pergjegjes) {
         this.autobusiId = autobusiId;
         this.kompaniaId = kompaniaId;
         this.targa = targa;

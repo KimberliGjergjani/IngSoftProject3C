@@ -1,4 +1,5 @@
 public class Transaksion {
+
 private int transaksionId;
 private int biletaId;
 private int counterparty_id;
